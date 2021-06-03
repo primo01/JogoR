@@ -1,0 +1,45 @@
+#Jogo Craps, modelo e estrategia pegas do videos
+#https://www.pinnacle.com/pt/betting-articles/casino/how-to-play-craps/3K52N9LQK55T3YVQ
+
+
+Craps <- function(jogadas){
+  prob<-NULL
+   for (i in 1:jogadas){
+    
+    comeOut <- sample(1:6,1)+ sample(1:6,1)
+    
+    if(comeOut %in% c(2,3,12)){
+      
+      result <- F #False
+      
+    }else if(comeOut %in% c(7,11)){
+      
+      result <- T
+    }
+    else{
+      
+      dados <- sample(1:6,1) + sample(1:6,1)
+      
+      if(dados == 7){
+        result <- F
+      }else {
+        result <- T
+      }
+      while (!(dados %in% c(7,comeOut))){
+        dados <- sample(1:6,1)+ sample(1:6,1)
+        
+      }
+      if(dados == 7)
+        result <- F
+        
+      else result <- T
+     
+    }
+    
+    prob[i] <- result
+    prob2<-sum(prob)/jogadas
+    print(prob2)
+   }  
+
+  }
+Craps(20000)
