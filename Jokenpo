@@ -1,0 +1,79 @@
+#Jogo de pedra, papel ou tesoura.
+
+#Basicamente vamos fazer o programa aceitar 3 "entradas", que o jogador vai decidir
+#Essas entradas s?o= pedra, papel ou tesoura
+#Assim que o jogador escolher uma op??o o jogo/computador dever? verificar se ele foi 
+#o vencedor ou n?o, e exibir na tela se ele conseguiu ganhar ou conseguiu perder.
+
+
+
+entrada <- readline(prompt = "Escolha entre pedra, papel ou tesoura (em minusculo por favor)")
+
+
+#Esse jogo precisa receber alguma entrada, que o jogador vai fornecer(foi fornecido acima), entao coloquei que
+#a fun??o recebe entrada, poderia ser outro nome, coloquei esse para ser mais facil.
+
+JOGO <- function(entrada){
+  
+  #Esse options s?o as op??es do jogo, a maquina n?o sabe o que ? pedra, papel ou tesoura,
+  #entao criei essa lista chamada de op??es para o jogo entender que s?o essas as op??es que tem
+  opcoes<-c("pedra","papel","tesoura")
+  #Aqui eu estou falando para o jogo que a escolha do computador vai ser um numero aleatorio
+  #que vai de 1 a 3 e que conte de 1 em 1
+  #?sample - para mais duvidas favor usar o comando de pesquisa.
+  #sample serve para embaralhar os numeros, estou mandando essas intru??es pois se o computador nao jogar tamb?m
+  #quem vai jogar pedra, papel ou tesoura com o jogador? coitado vai jogar sozinho?
+  escolha <-sample(1:3,1) #Apenas lembrando, aqui o computador escolhe 1 n? aleatorio de 1 a 3 contando de 1 em 1.
+  
+  #Agora irei desenhar para que seja entendido
+  #|Index | Escolha |
+  #|  1   | pedra   |
+  #|  2   | papel   |
+  #|  3   | tesoura |
+  #
+  
+  #A "opcoes" esta com uma lista igual a esse desenho(estrutura) ai que fiz, ent?o precisamos mandar o computador escolher 1
+  #e ? ai que o "escolha" entra na historia, ele vai pegar um numero aleatorio de 1 a 3 certo? (se nao entendeu at? aqui... desiste/estude)
+  #esse numero de 1 a 3 ? o respons?vel pelo index (esta no desenho que fiz o INDEX), ent?o o cod abaixo faz ? exatamente o seguinte:
+  # Pega o indice aleat?riamente das opcoes que criamos, se o indice for 1 ele pega pedra, se for 2 pega papel e se for 3 pega tesoura
+  
+  escolhaComputador = opcoes[escolha]
+  
+  #Basicamente irei fazer o computador colar o resultado que ele chegou, mas de uma forma bonitinha.
+  paste("O Computador jogou", escolhaComputador)
+  #Agora podemos fazer a mensagem do jogador, que ir? mostrar a entrada (escolha do jogador nesse jogo)
+  paste("O jogador jogou", entrada) #A entrada do jogador foi a que voce fez la no come?o.
+  
+  mensagem <- paste(escolhaComputador, "e" ,entrada) #Esse ser? o modelo que iremos utilizar como resposta.
+  
+  #Aqui vamos fazer uma brincadeira no codigo, iremos contruir uma lista com todas as respostas possiveis e depois cruzar a resposta que tivemos
+  #com a possivel resposta para ent?o verificarmos o vencedor.
+  #Poderiamos inicialmente usar um monte de IF, ou at? um for/while resolveria bem, mas eu gostei dessa estrategia
+  #pois eu n?o lembro de ter visto usar o codigo dessa forma.
+  
+  possiveisRespostas <- c("tesoura e pedra","tesoura e tesoura","tesoura e papel","pedra e tesoura","pedra e papel","pedra e pedra","papel e pedra","papel e papel","papel e tesoura")
+  
+  #Agora que temos a resposta do jogo que o computador jogou e que o jogador jogou (entrada), e tamb?m temos todas as respostas possiveis
+  #podemos ent?o cruzar essas op??es.
+  
+  #No cruzamento dos dados, ele s? vai verifcar se a resposta que ele deu, esta nessa lista, como somos racionais e n?o umas mulas
+  #sabemos que sim, ent?o o codigo vai apenas verificar isso e mostrar em qual lugar da lista as respostas sao iguai (resposta do computador e do jogador)
+  
+  cruzando <- match(mensagem,possiveisRespostas)
+  #S? pra deixar mais detalhado... meu cruzamento deu 1, pois minha resposta ? tesoura e pedra, a sua pode ser diferente, n???? n?????
+  
+  #?switch
+  
+  #o Switch mostra a mensagem que esta em X posi??o da nossa lista, vamos dizer que eu quero que ele mostra a op??o 5
+  #a mensagem que vai ser exibida caso eu selecione 5 vai se a "pedra e papel, voce venceu", o jeito mais facil disso ? usar [] mas,
+  #como n?o sabia que esse switch existia e a finalidade ? fazer algo novo e n?o um codigo perfomatico, vou manter assim.
+  result<-switch(cruzando,"tesoura e pedra, voce venceu","tesoura e tesoura, empatou","tesoura e papel, perdeu","pedra e tesoura, perdeu","pedra e papel, voce venceu","pedra e pedra, empatou","papel e pedra, perdeu","papel e papel, empatou","papel e tesoura, voce venceu")
+
+  return(result)
+}
+
+#depois de tudo eu posso jogar o jogo que cirei, como ? uma fun??o, ? s? chamar a fun??o e passar a entrada, que como sabemos, ? uma
+#? um string (str) que recebe apenas 3 resposta pedra, papel ou tesoura.
+JOGO("papel")
+JOGO("tesoura")
+JOGO("pedra")
