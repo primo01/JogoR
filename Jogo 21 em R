@@ -1,0 +1,80 @@
+#Jogo 21
+
+#No jogo 21 é disposto 2 cartas para o jogador e a somatoria tem que dar 21, o jogador pode escolher
+#pegar +1 carta, caso as 2 dele não chegarem perto de 21 ou parar, caso o jogo dele esteja bom.
+#Depois do jogador receber as cartas e terminar sua vez, é a vez da mesa jogar, se a mesa fazer 21 pontos
+# ou for o "jogador" que mais fizer pontos, a casas ganha, caso contrario o jogador ganha.
+
+#Esse jogo não vai ser muito complexo a ponto de contar as quantidades de cartas 1,2,3,4,5.... que sairam
+#para calcular o restante do baralho para estipular o % de chance de vitoria.
+
+
+
+Jogo21 <- function(){
+  cartasJogador = 1
+  cartaMesa = 1
+  carta = "S"
+  cartasJogador <- sample(1:13,1) + sample(1:13,1)
+  while(cartasJogador>0){
+  if(cartasJogador > 21){
+    
+    return("Suas cartas passaram de 21, você perdeu!")
+    break
+    
+  }else if(cartasJogador == 21){
+    
+    return("Wow, voce fez 21, parabens você ganhou!")
+    break
+  }
+  
+  cat("Voce marcou até agora",cartasJogador,"pontos, deseja mais cartas[S] ou [N]?")
+  carta <- readLines(n = 1)
+  if(carta =="S"){
+    cartasJogador <- cartasJogador + sample(1:13,1)
+  }
+  else if(carta == "N")
+  {
+    break 
+  }
+  }
+
+#Com a vez do jogador encerrada, vamos iniciar a vez da mesa jogar, vou fazer separado.
+#Se quiser pode ser feito tudo junto, na minha cabeça basta apenas adicionar 2 variaveis ou até mesmo 1 só, e arrumar os laços.
+  
+  cartaMesa <- sample(1:13,1) + sample(1:13,1)
+  while(cartaMesa>0){
+    if(cartaMesa > 21){
+      return("Mesa passou de 21, você Ganhou!")
+      break
+    }else if(cartaMesa == 21){
+      return("Mesa fez 21, Mesa Ganhou!")
+      break
+    }
+  
+#A versão 1 desse jogo não vei ter probabilidade, a versão 2 sim.
+    
+    if(cartaMesa<16 && cartaMesa>0){
+      cartaMesa <- cartaMesa + sample(1:13,1)
+    }
+    else if(cartaMesa>=16 && cartaMesa<21)
+    {
+      break 
+    }
+    
+  }
+  
+#Agora vou fazer a comparação, na proxima versão terá um while direitinho com os break points certos
+#para nao gerar algo assim tao grande.
+
+    valor <- c(cartaMesa,cartasJogador)
+  if(cartaMesa >=cartasJogador && valor < 22 ){
+    cat("Voce conseguiu ",cartasJogador,"pontos, a Mesa conseguiu ",cartaMesa,". Mesa venceu!")
+  }
+  else if (cartasJogador >=cartaMesa && valor < 22 )
+    cat("Voce conseguiu ",cartasJogador,"pontos, a Mesa conseguiu ",cartaMesa,". você venceu!")
+
+
+  }
+
+
+Jogo21()
